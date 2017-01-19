@@ -8,8 +8,8 @@ Usage:
 from setuptools import setup
 
 APP = ['chat.py']
-DATA_FILES = []
-OPTIONS = {'argv_emulation': True}
+DATA_FILES = ['chatterbotapi.py']
+OPTIONS = {'argv_emulation': False}
 
 setup(
     app=APP,
