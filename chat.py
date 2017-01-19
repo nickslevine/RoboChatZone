@@ -1,7 +1,5 @@
 import sys
-import pickle
 import os
-import time
 
 from chatterbotapi import ChatterBotFactory, ChatterBotType
 
@@ -24,22 +22,20 @@ class App:
             self.text = tk.StringVar()
             self.textbox = tk.Message(master, textvariable=self.text)
             self.textbox.grid(row=1, column=0)
+	def send_message(self):
+			self.msg = self.enter.get()
+			self.transcript = self.msg
+			self.enter.delete(0, 'end')
+			self.text.set(self.transcript)
 
-        def send_message(self):
-            self.msg = self.enter.get()
-            self.transcript = self.msg
-            self.enter.delete(0, 'end')
-            self.text.set(self.transcript)
-
-            self.factory = ChatterBotFactory()
-
-            self.bot = self.factory.create(ChatterBotType.CLEVERBOT)
-            self.botsession = self.bot.create_session()
-            for x in range(0,5):
-                self.msg = self.botsession.think(self.msg)
-                self.transcript += "\n\n" + self.msg
-                print(self.msg)
-                update_text(self)
+			self.factory = ChatterBotFactory()
+			self.bot = self.factory.create(ChatterBotType.CLEVERBOT)
+			self.botsession = self.bot.create_session()
+			for x in range(0,5):
+				self.msg = self.botsession.think(self.msg)
+				self.transcript += "\n\n" + self.msg[2:]
+				print(self.msg)
+				update_text(self)
 
 def update_text(self):
     self.text.set(self.transcript)
