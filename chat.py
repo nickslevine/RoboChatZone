@@ -1,3 +1,6 @@
+# To build: pyinstaller --onefile --windowed --icon=robo.icns --add-data="chatterbotapi.py:." chat.py
+# To make icon: sips -s format icns robo.png --out robo.icns
+
 import sys
 from PyQt5.QtWidgets import (QWidget, QGridLayout, QPushButton, QApplication, QListWidget, QLineEdit)
 
