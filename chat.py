@@ -1,9 +1,5 @@
 import sys
-<<<<<<< HEAD
 from PyQt5.QtWidgets import (QWidget, QGridLayout, QPushButton, QApplication, QListWidget, QLineEdit)
-=======
-import os
->>>>>>> 58b5f13657f106a0cf8d6814aba8f838591be30b
 
 from chatterbotapi import ChatterBotFactory, ChatterBotType
 
@@ -15,35 +11,13 @@ class Chat(QWidget):
         self.initUI()
 
     def initUI(self):
-
-<<<<<<< HEAD
-
+        
         grid = QGridLayout()
         self.setLayout(grid)
 
         send = QPushButton('Chat')
         send.clicked.connect(self.send_msg)
         grid.addWidget(send, 0, 1)
-
-=======
-            self.text = tk.StringVar()
-            self.textbox = tk.Message(master, textvariable=self.text)
-            self.textbox.grid(row=1, column=0)
-	def send_message(self):
-			self.msg = self.enter.get()
-			self.transcript = self.msg
-			self.enter.delete(0, 'end')
-			self.text.set(self.transcript)
-
-			self.factory = ChatterBotFactory()
-			self.bot = self.factory.create(ChatterBotType.CLEVERBOT)
-			self.botsession = self.bot.create_session()
-			for x in range(0,5):
-				self.msg = self.botsession.think(self.msg)
-				self.transcript += "\n\n" + self.msg[2:]
-				print(self.msg)
-				update_text(self)
->>>>>>> 58b5f13657f106a0cf8d6814aba8f838591be30b
 
         self.listbox = QListWidget()
         grid.addWidget(self.listbox, 1, 0)
