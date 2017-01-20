@@ -1,50 +1,59 @@
 import sys
-import pickle
-import os
-import time
+from PyQt5.QtWidgets import (QWidget, QGridLayout, QPushButton, QApplication, QListWidget, QLineEdit)
 
 from chatterbotapi import ChatterBotFactory, ChatterBotType
 
+class Chat(QWidget):
 
-if sys.version_info < (3, 0):
-	# Python 2
-	import Tkinter as tk
-else:
-	# Python 3
-	import tkinter as tk
+    def __init__(self):
+        super().__init__()
 
-class App:
-	def __init__(self, master):
-            self.enter = tk.Entry(master)
-            self.enter.grid(row=0, column=0)
+        self.initUI()
 
-            self.send = tk.Button(master, text="Send", command=self.send_message)
-            self.send.grid(row=0, column=1)
+    def initUI(self):
 
-            self.text = tk.StringVar()
-            self.textbox = tk.Message(master, textvariable=self.text)
-            self.textbox.grid(row=1, column=0)
 
-        def send_message(self):
-            self.msg = self.enter.get()
-            self.transcript = self.msg
-            self.enter.delete(0, 'end')
-            self.text.set(self.transcript)
+        grid = QGridLayout()
+        self.setLayout(grid)
 
-            self.factory = ChatterBotFactory()
+        send = QPushButton('Chat')
+        send.clicked.connect(self.send_msg)
+        grid.addWidget(send, 0, 1)
 
-            self.bot = self.factory.create(ChatterBotType.CLEVERBOT)
-            self.botsession = self.bot.create_session()
-            for x in range(0,5):
+
+        self.listbox = QListWidget()
+        grid.addWidget(self.listbox, 1, 0)
+
+        self.entry = QLineEdit()
+        grid.addWidget(self.entry, 0, 0)
+
+        self.factory = ChatterBotFactory()
+        self.bot = self.factory.create(ChatterBotType.CLEVERBOT)
+        self.botsession = self.bot.create_session()
+
+        self.move(300, 150)
+        self.setWindowTitle('RoboChatZone')
+        self.show()
+
+    def send_msg(self):
+        if len(self.entry.text()) > 0:
+            self.msg = self.entry.text()
+            self.listbox.addItem(self.msg)
+            self.entry.clear()
+        else:
+            try:
                 self.msg = self.botsession.think(self.msg)
-                self.transcript += "\n\n" + self.msg
-                print(self.msg)
-                update_text(self)
+                if self.msg[0:2]== "b'" or self.msg[0:2] == "b\"":
+                    self.listbox.addItem(self.msg[2:])
+                else:
+                    self.listbox.addItem(self.msg)
+            except:
+                self.msg = self.entry.text()
+                self.listbox.addItem(self.msg)
+        
 
-def update_text(self):
-    self.text.set(self.transcript)
+if __name__ == '__main__':
 
-root = tk.Tk()
-root.title("RoboChatZone")
-app = App(root)
-root.mainloop()
+    app = QApplication(sys.argv)
+    ex = Chat()
+    sys.exit(app.exec_())
