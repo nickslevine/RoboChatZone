@@ -52,6 +52,7 @@ class Chat(QWidget):
             except:
                 self.msg = self.entry.text()
                 self.listbox.addItem(self.msg)
+        self.listbox.scrollToBottom()
         
 
 if __name__ == '__main__':
