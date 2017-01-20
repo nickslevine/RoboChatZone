@@ -26,6 +26,7 @@ class Chat(QWidget):
         grid.addWidget(self.listbox, 1, 0)
 
         self.entry = QLineEdit()
+        self.entry.returnPressed.connect(self.send_msg)
         grid.addWidget(self.entry, 0, 0)
 
         self.factory = ChatterBotFactory()
